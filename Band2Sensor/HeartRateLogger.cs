@@ -6,10 +6,11 @@ using Microsoft.Band.Portable.Sensors;
 
 namespace Band2Sensor
 {
-    public class HeartRateLogger
+    public class HeartRateLogger : IDisposable
     {
         private readonly BandClient _bandClient;
         private readonly ILineWriter _lineWriter;
+        private BandHeartRateSensor _heartRate;
 
         public HeartRateLogger(BandClient bandClient, ILineWriter lineWriter)
         {
@@ -33,15 +34,20 @@ namespace Band2Sensor
         public async Task StartAsync()
         {
             var sensormanager = _bandClient.SensorManager;
-            var heartRate = sensormanager.HeartRate;
-            heartRate.ReadingChanged += HeartRateOnReadingChanged;
+            _heartRate = sensormanager.HeartRate;
+            _heartRate.ReadingChanged += HeartRateOnReadingChanged;
 
-            if (heartRate.UserConsented == UserConsent.Unspecified)
+            if (_heartRate.UserConsented == UserConsent.Unspecified)
             {
-                var granted = await heartRate.RequestUserConsent();
+                var granted = await _heartRate.RequestUserConsent();
             }
-            if (heartRate.UserConsented == UserConsent.Granted)
-                await heartRate.StartReadingsAsync(BandSensorSampleRate.Ms16);
+            if (_heartRate.UserConsented == UserConsent.Granted)
+                await _heartRate.StartReadingsAsync(BandSensorSampleRate.Ms16);
+        }
+
+        public void Dispose()
+        { 
+            _heartRate.ReadingChanged -= HeartRateOnReadingChanged;
         }
     }
 }

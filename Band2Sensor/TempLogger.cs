@@ -6,10 +6,11 @@ using Microsoft.Band.Portable.Sensors;
 
 namespace Band2Sensor
 {
-    public class TempLogger
+    public class TempLogger : IDisposable
     {
         private readonly BandClient _bandClient;
         private readonly ILineWriter _lineWriter;
+        private BandSkinTemperatureSensor _skinTemp;
 
         public TempLogger(BandClient bandClient, ILineWriter lineWriter)
         {
@@ -32,9 +33,14 @@ namespace Band2Sensor
         public async Task StartAsync()
         {
             var sensormanager = _bandClient.SensorManager;
-            var skinTemp = sensormanager.SkinTemperature;
-            skinTemp.ReadingChanged += SkinTempOnReadingChangedAsync;
-            await skinTemp.StartReadingsAsync();
+            _skinTemp = sensormanager.SkinTemperature;
+            _skinTemp.ReadingChanged += SkinTempOnReadingChangedAsync;
+            await _skinTemp.StartReadingsAsync();
+        }
+
+        public void Dispose()
+        {
+            _skinTemp.ReadingChanged -= SkinTempOnReadingChangedAsync;
         }
     }
 }

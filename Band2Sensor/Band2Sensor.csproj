@@ -29,7 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
@@ -77,9 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BandConnector.cs" />
+    <Compile Include="FileLineWriter.cs" />
     <Compile Include="GsrLogger.cs" />
     <Compile Include="HeartRateLogger.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ReconnectService.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TempLogger.cs" />

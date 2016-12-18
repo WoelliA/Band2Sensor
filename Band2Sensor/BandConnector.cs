@@ -6,20 +6,22 @@ namespace Band2Sensor
 {
     public class BandConnector
     {
-        private readonly BandClientManager bandClientManager = BandClientManager.Instance;
-
         public async Task<BandClient> ConnectToBandAsync()
         {
             BandDeviceInfo bandInfo = null;
 
-            while (bandInfo == null)
+            var bandClientManager1 = BandClientManager.Instance;
+
+            var pairedBands = await bandClientManager1.GetPairedBandsAsync();
+            // connect to the first device
+            bandInfo = pairedBands.FirstOrDefault();
+
+            if (bandInfo != null)
             {
-                var pairedBands = await bandClientManager.GetPairedBandsAsync();
-                // connect to the first device
-                bandInfo = pairedBands.FirstOrDefault();
+                var bamdclient = await bandClientManager1.ConnectAsync(bandInfo);
+                return bamdclient;
             }
-            var bandClient = await bandClientManager.ConnectAsync(bandInfo);
-            return bandClient;
+            return null;
         }
     }
 }
