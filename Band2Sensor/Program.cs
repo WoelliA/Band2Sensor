@@ -31,6 +31,8 @@ namespace Band2Sensor
             {
                 Log.Error("Programm", e.Message);
             }
+            //Checken ob das Band getragen wird und nur dann Daten übertragen
+            //var IsConnected = _bandClient.SensorManager.Contact(CheckIsConnected());
 
             if (_bandClient != null && _bandClient.IsConnected == true)
             {

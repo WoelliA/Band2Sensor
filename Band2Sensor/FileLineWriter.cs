@@ -20,7 +20,8 @@ namespace Band2Sensor
 
         public FileLineWriter(string filename)
         {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var documentsPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             //documentsPath = Path.Combine(documentsPath, "band");
             this.fileName = Path.Combine(documentsPath, filename);
         }

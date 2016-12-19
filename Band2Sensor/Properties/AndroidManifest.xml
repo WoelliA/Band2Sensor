@@ -4,4 +4,5 @@
 	<application android:label="Band2Sensor"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="com.microsoft.band.service.access.BIND_BAND_SERVICE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
